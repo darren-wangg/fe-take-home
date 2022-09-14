@@ -1,9 +1,16 @@
 import { Flex, useColorMode } from "@chakra-ui/react";
-
 import { Container } from "../components/Container";
 import { DarkModeSwitch } from "../components/DarkModeSwitch";
 import HypeLogo from "../components/HypeLogo";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { HyperspaceClient } from "hyperspace-client-js";
+
+import Home from "./Home";
+import Project from "./Project";
+// import Token from "./Token";
+// import Likes from "./Likes";
+// import Discover from "./Discover";
+import { AppContext } from "../context";
 
 const Index = () => {
   const { colorMode } = useColorMode();
@@ -15,16 +22,41 @@ const Index = () => {
 
   return (
     <Container height="100vh">
-      <Flex w={"100%"} h={"80px"} alignItems={"center"} px={4}>
-        <HypeLogo
-          fillColor={colorMode === "dark" ? "white" : "black"}
-          height={30}
-        />
-      </Flex>
+      <AppContext.Provider
+        value={{
+          hyperClient,
+        }}
+      >
+        <Flex w={"100%"} h={"80px"} alignItems={"center"} px={4}>
+          <HypeLogo
+            fillColor={colorMode === "dark" ? "white" : "black"}
+            height={30}
+          />
+        </Flex>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/project/:id" element={<Project />} />
+          </Routes>
 
-      {/* Using our Hyperspace data, build out something cool for us to review together! */}
-
-      <DarkModeSwitch />
+          <div>
+            <nav>
+              <ul>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/likes">Likes</Link>
+                </li>
+                <li>
+                  <Link to="/discover">Discover</Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </BrowserRouter>
+        <DarkModeSwitch />
+      </AppContext.Provider>
     </Container>
   );
 };
