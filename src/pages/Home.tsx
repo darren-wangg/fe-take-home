@@ -10,6 +10,7 @@ const MAX_LIMIT: number = 5;
 
 const Home = (props: any) => {
   const { hyperClient } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const [projects, setProjects] = useState([]);
 
@@ -36,18 +37,20 @@ const Home = (props: any) => {
   }, []);
 
   const handleClick = (id: String) => {
-    console.log("CLICKED: (project) ", id);
+    navigate(`/project/${id}`);
   };
 
   const renderProjects = () => {
     return projects.map((project: any, index: number) => {
       return (
-        <GridItem key={index} colSpan={1} bg="gray" h="100px">
-          <Card
-            data={project}
-            type="project"
-            onClick={() => handleClick(project.project.me_slug)}
-          />
+        <GridItem
+          key={index}
+          colSpan={1}
+          bg="gray"
+          h="100px"
+          onClick={() => handleClick(project.project.me_slug || project.project_id)}
+        >
+          <Card data={project} type="project" />
         </GridItem>
       );
     });

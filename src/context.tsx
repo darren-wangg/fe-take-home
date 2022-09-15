@@ -9,8 +9,5 @@ const hyperClient = new HyperspaceClient(
 export const AppContext = createContext({
   hyperClient,
   likes: [],
-  collections: [],
-//   setUserAddress: (address: string) => {
-//     this.userAddress = address;
-//   },
+  collections: []
 });

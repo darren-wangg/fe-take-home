@@ -93,7 +93,13 @@ const Card = (props: any) => {
 
   const Collection = () => {
     return (
-      <Box maxW="lg" borderWidth="1px" borderRadius="lg" overflow="hidden">
+      <Box
+        maxW="lg"
+        borderWidth="1px"
+        borderRadius="lg"
+        overflow="hidden"
+        style={{ cursor: "pointer" }}
+      >
         <h3>{data.name}</h3>
 
         <Grid gap={6}>

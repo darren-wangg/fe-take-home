@@ -1,17 +1,15 @@
-import { Grid, GridItem, Box, Image } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { Grid, GridItem } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-import { AppContext } from "../context";
 import Card from "../components/Card";
 import { Container } from "../components/Container";
 
 const MAX_LIMIT: number = 5;
 
 const Likes = (props: any) => {
-  const { hyperClient } = useContext(AppContext);
+  const navigate = useNavigate();
 
-  // TODO: change this to be dynamic
+  // TODO: get this from Context
   const likes: any[] = [
     {
       token_address: "9Wg9bjexNdbV9aT4k6xrLpMnwaRtCkMvHasE2rvdosEk",
@@ -60,19 +58,21 @@ const Likes = (props: any) => {
     },
   ];
 
-  const handleClick = (id: String) => {
-    console.log("CLICKED: (like) ", id);
+  const handleClick = (address: String) => {
+    navigate(`/token/${address}`);
   };
 
   const renderLikes = () => {
     return likes.map((like: any, index: number) => {
       return (
-        <GridItem key={index} colSpan={1} bg="gray" h="100px">
-          <Card
-            data={like}
-            type="token"
-            onClick={() => handleClick(like.token_address)}
-          />
+        <GridItem
+          key={index}
+          colSpan={1}
+          bg="gray"
+          h="100px"
+          onClick={() => handleClick(like.token_address)}
+        >
+          <Card data={like} type="token" />
         </GridItem>
       );
     });
@@ -84,7 +84,9 @@ const Likes = (props: any) => {
 
   return (
     <Container>
-      <Grid templateColumns={`repeat(${MAX_LIMIT}, 1fr)`} gap={6}>{renderLikes()}</Grid>
+      <Grid templateColumns={`repeat(${MAX_LIMIT}, 1fr)`} gap={6}>
+        {renderLikes()}
+      </Grid>
     </Container>
   );
 };

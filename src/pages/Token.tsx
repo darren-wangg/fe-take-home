@@ -2,7 +2,6 @@ import { Box, Image, Icon } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { useEffect, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { AppContext } from "../context";
 import { Container } from "../components/Container";
@@ -10,12 +9,14 @@ import { Container } from "../components/Container";
 const Token = (props: any) => {
   const { hyperClient } = useContext(AppContext);
 
-  // TODO: make this dynamic
-  const address = "9Wg9bjexNdbV9aT4k6xrLpMnwaRtCkMvHasE2rvdosEk";
+  // TODO: set this in Context?
+  let address: string;
 
   const [tokenInfo, setTokenInfo] = useState({});
 
   useEffect(() => {
+    address = window.location.href.split("/")[4];
+
     hyperClient
       .getTokenState({
         condition: {

@@ -13,6 +13,7 @@ import Discover from "./Discover";
 import Collection from "./Collection";
 
 import { AppContext } from "../context";
+import { render } from "react-dom";
 
 const Index = () => {
   const { colorMode } = useColorMode();
@@ -21,6 +22,16 @@ const Index = () => {
   const hyperClient = new HyperspaceClient(
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJGRSBJbnRlcnZpZXciLCJuYW1lIjoiSHlwZXJzcGFjZSIsImlhdCI6MTUxNjIzOTAyMn0.HDfB97Y1pgQqQ6GshXsh5nz7fA1_ban9MTZDAbgobJk"
   );
+
+  if (typeof window === "object") {
+    document.addEventListener("DOMContentLoaded", function () {
+      
+    });
+  };
+
+  if (typeof window === "undefined") {
+    return null;
+  };
 
   return (
     <Container height="100vh">

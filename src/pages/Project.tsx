@@ -11,9 +11,16 @@ const MAX_LIMIT: number = 5;
 
 const Project = (props: any) => {
   const { hyperClient } = useContext(AppContext);
+  const navigate = useNavigate();
 
-  // TODO: change this to be dynamic
-  const id = "degods";
+  // TODO: set this in Context?
+  let id: String;
+  useEffect(() => {
+    id = window.location.href.split("/")[4];
+
+    fetchProjectInfo();
+    fetchProjectTokens();
+  }, []);
 
   const [projectInfo, setProjectInfo] = useState({});
   const [tokens, setTokens] = useState([]);
@@ -66,24 +73,21 @@ const Project = (props: any) => {
       });
   };
 
-  useEffect(() => {
-    fetchProjectInfo();
-    fetchProjectTokens();
-  }, []);
-
-  const handleClick = (id: String) => {
-    console.log("CLICKED: (token) ", id);
+  const handleClick = (address: String) => {
+    navigate(`/token/${address}`);
   };
 
   const renderTokens = () => {
     return tokens.map((token: any, index: number) => {
       return (
-        <GridItem key={index} colSpan={1} bg="gray" h="100px">
-          <Card
-            data={token}
-            type="token"
-            onClick={() => handleClick(token.token_address)}
-          />
+        <GridItem
+          key={index}
+          colSpan={1}
+          bg="gray"
+          h="100px"
+          onClick={() => handleClick(token.token_address)}
+        >
+          <Card data={token} type="token" />
         </GridItem>
       );
     });

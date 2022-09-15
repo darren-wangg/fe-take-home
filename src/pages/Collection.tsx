@@ -1,5 +1,6 @@
 import { Grid, GridItem, Box, Image } from "@chakra-ui/react";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { AppContext } from "../context";
 import Card from "../components/Card";
@@ -9,6 +10,7 @@ const MAX_LIMIT: number = 5;
 
 const Collection = (props: any) => {
   const { hyperClient } = useContext(AppContext);
+  const navigate = useNavigate();
 
   // TODO: change this to be dynamic
   const collection = {
@@ -109,10 +111,14 @@ const Collection = (props: any) => {
     ],
   };
 
+  const handleClick = (address: string) => {
+    navigate(`/token/${address}`);
+  };
+
   const renderTokens = () => {
     return collection.tokens.map((token: any, index: number) => {
       return (
-        <GridItem key={index} colSpan={1} bg="gray" h="100px">
+        <GridItem key={index} colSpan={1} bg="gray" h="100px" onClick={() => handleClick(token.token_address)}>
           <Card
             data={token}
             type="token"
