@@ -1,4 +1,4 @@
-import { Box, Image, Badge, Icon } from "@chakra-ui/react";
+import { Box, Image, Badge, Icon, Grid, GridItem } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
 import { FaDiscord, FaTwitter } from "react-icons/fa";
 
@@ -9,7 +9,13 @@ const Card = (props: any) => {
 
   const Project = () => {
     return (
-      <Box maxW="md" borderWidth="1px" borderRadius="lg" overflow="hidden">
+      <Box
+        maxW="md"
+        borderWidth="1px"
+        borderRadius="lg"
+        overflow="hidden"
+        style={{ cursor: "pointer" }}
+      >
         <Image src={data.project.img_url} alt={data.project_id} />
 
         <Box p="6">
@@ -33,7 +39,10 @@ const Card = (props: any) => {
             </Box>
             <Box>
               <p>Listed</p>
-              <h3>{data.num_of_token_listed.toLocaleString()} / {data.num_of_token_holders.toLocaleString()}</h3>
+              <h3>
+                {data.num_of_token_listed.toLocaleString()} /{" "}
+                {data.num_of_token_holders.toLocaleString()}
+              </h3>
             </Box>
           </Box>
         </Box>
@@ -48,18 +57,55 @@ const Card = (props: any) => {
         borderWidth="1px"
         borderRadius="lg"
         overflow="hidden"
-      ></Box>
+        style={{ cursor: "pointer" }}
+      >
+        <Image src={data.meta_data_img} alt={data.name} />
+
+        <Box p="6">
+          <Box display="flex" alignItems="baseline">
+            {data.name.substring(0, NAME_LIMIT)}
+            <Badge borderRadius="full" px="2" colorScheme="blue">
+              <CheckIcon />
+            </Badge>
+          </Box>
+        </Box>
+
+        <Box p="6">
+          <Box display="flex" alignItems="baseline">
+            Sol:
+            {data.lowest_listing_mpa
+              ? data.lowest_listing_mpa.price
+              : data.price}
+          </Box>
+        </Box>
+
+        <Box p="6">
+          <Box display="flex" alignItems="baseline">
+            <Box>
+              <button>Buy</button>
+              <button>Details</button>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
     );
   };
 
   const Collection = () => {
     return (
-      <Box
-        maxW="md"
-        borderWidth="1px"
-        borderRadius="lg"
-        overflow="hidden"
-      ></Box>
+      <Box maxW="lg" borderWidth="1px" borderRadius="lg" overflow="hidden">
+        <h3>{data.name}</h3>
+
+        <Grid gap={6}>
+          {data.tokens.map((token: any, index: number) => {
+            return (
+              <GridItem key={index} colSpan={1} bg="gray" h="100px" w="100px">
+                <Image src={token.meta_data_img} alt={token.name} />
+              </GridItem>
+            );
+          })}
+        </Grid>
+      </Box>
     );
   };
 

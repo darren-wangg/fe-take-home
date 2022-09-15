@@ -7,9 +7,11 @@ import { HyperspaceClient } from "hyperspace-client-js";
 
 import Home from "./Home";
 import Project from "./Project";
-// import Token from "./Token";
-// import Likes from "./Likes";
-// import Discover from "./Discover";
+import Token from "./Token";
+import Likes from "./Likes";
+import Discover from "./Discover";
+import Collection from "./Collection";
+
 import { AppContext } from "../context";
 
 const Index = () => {
@@ -33,12 +35,8 @@ const Index = () => {
             height={30}
           />
         </Flex>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/project/:id" element={<Project />} />
-          </Routes>
 
+        <BrowserRouter>
           <div>
             <nav>
               <ul>
@@ -46,7 +44,10 @@ const Index = () => {
                   <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <Link to="/likes">Likes</Link>
+                  <Link to="/likes">My Likes</Link>
+                </li>
+                <li>
+                  <Link to="/discover">My Collections</Link>
                 </li>
                 <li>
                   <Link to="/discover">Discover</Link>
@@ -54,6 +55,15 @@ const Index = () => {
               </ul>
             </nav>
           </div>
+
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/project/:id" element={<Project />} />
+            <Route path="/token/:id" element={<Token />} />
+            <Route path="/likes" element={<Likes />} />
+            <Route path="/discover" element={<Discover />} />
+            <Route path="/collection/:name" element={<Collection />} />
+          </Routes>
         </BrowserRouter>
         <DarkModeSwitch />
       </AppContext.Provider>

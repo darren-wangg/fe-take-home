@@ -10,7 +10,6 @@ const MAX_LIMIT: number = 5;
 
 const Home = (props: any) => {
   const { hyperClient } = useContext(AppContext);
-  const navigate = useNavigate();
 
   const [projects, setProjects] = useState([]);
 
@@ -37,7 +36,7 @@ const Home = (props: any) => {
   }, []);
 
   const handleClick = (id: String) => {
-    navigate(`/project/${id}`);
+    console.log("CLICKED: (project) ", id);
   };
 
   const renderProjects = () => {
@@ -47,7 +46,7 @@ const Home = (props: any) => {
           <Card
             data={project}
             type="project"
-            onClick={() => handleClick(project.project_id)}
+            onClick={() => handleClick(project.project.me_slug)}
           />
         </GridItem>
       );
