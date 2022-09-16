@@ -1,5 +1,13 @@
-import { Grid, GridItem, Stack, Heading } from "@chakra-ui/react";
-import { useContext } from "react";
+import {
+  Grid,
+  GridItem,
+  Stack,
+  Heading,
+  Textarea,
+  Button,
+} from "@chakra-ui/react";
+import { EditIcon, CheckIcon } from "@chakra-ui/icons";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AppContext } from "../context";
@@ -11,6 +19,8 @@ const MAX_LIMIT: number = 5;
 const Collection = (props: any) => {
   const { hyperClient } = useContext(AppContext);
   const navigate = useNavigate();
+
+  const [isEditMode, setIsEditMode] = useState(false);
 
   // TODO: change this to be dynamic
   const collection = {
@@ -138,9 +148,16 @@ const Collection = (props: any) => {
   return (
     <Container>
       <Stack spacing={10} alignItems="center">
-        <Heading as="h3" size="lg">
-          {collection.name}
-        </Heading>
+        <Stack direction="row" spacing={8}>
+          <Heading as="h3" size="lg">
+            {collection.name}
+          </Heading>
+          <Button onClick={() => setIsEditMode(!isEditMode)}>
+            {isEditMode ? <CheckIcon /> : <EditIcon />}
+          </Button>
+        </Stack>
+
+        {isEditMode && <Textarea placeholder="Add a description" w="500px" />}
         <Grid templateColumns={`repeat(${MAX_LIMIT}, 1fr)`} gap={6}>
           {renderTokens()}
         </Grid>
