@@ -14,6 +14,7 @@ import { CheckIcon } from "@chakra-ui/icons";
 import { FaDiscord, FaTwitter } from "react-icons/fa";
 
 const NAME_LIMIT: number = 25;
+const MAX_LIMIT: number = 5;
 
 const Card = (props: any) => {
   const { data, type } = props;
@@ -80,21 +81,23 @@ const Card = (props: any) => {
         <Image src={data.meta_data_img} alt={data.name} />
 
         <Box p="6">
-          <Box display="flex" alignItems="baseline">
-            {data.name.substring(0, NAME_LIMIT)}
+          <Stack direction="row" spacing={4}>
+            <Heading as="h5" size="md">
+              {data.name.substring(0, NAME_LIMIT)}
+            </Heading>
             <Badge borderRadius="full" px="2" colorScheme="blue">
               <CheckIcon />
             </Badge>
-          </Box>
+          </Stack>
         </Box>
 
         <Box p="6">
-          <Box display="flex" alignItems="baseline">
+          <Text fontSize="lg">
             Sol:{" "}
             {data.lowest_listing_mpa
               ? data.lowest_listing_mpa.price
-              : data.price}
-          </Box>
+              : data.market_place_state.price}
+          </Text>
         </Box>
 
         <Box p="6">
@@ -117,12 +120,15 @@ const Card = (props: any) => {
         maxW="lg"
         borderWidth="1px"
         borderRadius="lg"
-        overflow="hidden"
         style={{ cursor: "pointer" }}
       >
-        <h3>{data.name}</h3>
+        <Box h="70px" bg="gray">
+          <Heading as="h3" size="lg">
+            {data.name}
+          </Heading>
+        </Box>
 
-        <Grid gap={6}>
+        <Grid templateColumns={`repeat(${MAX_LIMIT}, 1fr)`} gap={2}>
           {data.tokens.map((token: any, index: number) => {
             return (
               <GridItem key={index} colSpan={1} bg="gray" h="100px" w="100px">

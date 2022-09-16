@@ -1,5 +1,5 @@
-import { Grid, GridItem, Box, Image } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { Grid, GridItem, Stack, Box, Image } from "@chakra-ui/react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AppContext } from "../context";
@@ -115,14 +115,13 @@ const Discover = (props: any) => {
     navigate(`/collection/${name}`);
   };
 
-  const renderTokens = () => {
+  const renderCollections = () => {
     return collections.map((collection: any, index: number) => {
       return (
         <GridItem
           key={index}
           colSpan={1}
-          bg="gray"
-          h="100px"
+          h="300px"
           onClick={() => handleClick(collection.name)}
         >
           <Card data={collection} type="collection" />
@@ -141,7 +140,7 @@ const Discover = (props: any) => {
 
   return (
     <Container>
-      <Grid gap={6}>{renderTokens()}</Grid>
+      <Grid gap={6}>{renderCollections()}</Grid>
     </Container>
   );
 };

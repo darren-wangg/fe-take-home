@@ -1,4 +1,4 @@
-import { Grid, GridItem, Box, Image } from "@chakra-ui/react";
+import { Grid, GridItem, Stack, Heading } from "@chakra-ui/react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -118,11 +118,14 @@ const Collection = (props: any) => {
   const renderTokens = () => {
     return collection.tokens.map((token: any, index: number) => {
       return (
-        <GridItem key={index} colSpan={1} bg="gray" h="100px" onClick={() => handleClick(token.token_address)}>
-          <Card
-            data={token}
-            type="token"
-          />
+        <GridItem
+          key={index}
+          colSpan={1}
+          bg="gray"
+          h="100px"
+          onClick={() => handleClick(token.token_address)}
+        >
+          <Card data={token} type="token" />
         </GridItem>
       );
     });
@@ -134,12 +137,14 @@ const Collection = (props: any) => {
 
   return (
     <Container>
-      <Box>
-        <h3>{collection.name}</h3>
-      </Box>
-      <Grid templateColumns={`repeat(${MAX_LIMIT}, 1fr)`} gap={6}>
-        {renderTokens()}
-      </Grid>
+      <Stack spacing={10} alignItems="center">
+        <Heading as="h3" size="lg">
+          {collection.name}
+        </Heading>
+        <Grid templateColumns={`repeat(${MAX_LIMIT}, 1fr)`} gap={6}>
+          {renderTokens()}
+        </Grid>
+      </Stack>
     </Container>
   );
 };
