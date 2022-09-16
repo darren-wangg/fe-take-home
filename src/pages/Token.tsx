@@ -14,6 +14,18 @@ import {
   TabPanel,
   Textarea,
   Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
@@ -29,9 +41,11 @@ const Token = (props: any) => {
   let address: string;
 
   const [tokenInfo, setTokenInfo] = useState({});
-  const [showCollectionModal, setShowCollectionModal] = useState(false);
   const [value, setValue] = useState("");
   const [comments, setComments] = useState([]);
+
+  const [showCollectionModal, setShowCollectionModal] = useState(false);
+  const [name, setName] = useState("");
 
   const isLiked: boolean = likes.some(
     (like) => like.token_address === tokenInfo.token_address
@@ -61,32 +75,31 @@ const Token = (props: any) => {
     setLikes([...likes, tokenInfo]);
   };
 
-  const handleAdd = () => {
-    // show modal to add to collection
-    setShowCollectionModal(true);
+  const handleCreateNewCollection = () => {
+    const newCollection = {
+      name,
+      tokens: [tokenInfo],
+    };
 
-    let newCollection: any = {};
+    setCollections([...collections, newCollection]);
+    setShowCollectionModal(false);
+  };
+
+  const handleAdd = (name: string) => {
     // add to existing collection: all token info
-    // if () {
-    //     newCollection = {
-    //         name: ,
-    //         tokens: [...tokens, tokenInfo]
-    //     };
-    // };
+    if (!collections) return;
 
-    // // create a new collection
-    // else {
-    //     newCollection = {
-    //         name: ,
-    //         tokens: [tokenInfo]
-    //     };
-    // };
-
-    // setCollections([...collections, newCollection]);
+    collections
+      .find((collection) => collection.name === name)
+      .tokens.push(tokenInfo);
   };
 
   const handleInputChange = (e) => {
     setValue(e.target.value);
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
 
   const handlePost = () => {
@@ -114,9 +127,62 @@ const Token = (props: any) => {
               <Icon as={FaRegHeart} />
             )}
           </button>
-          <Button onClick={() => handleAdd()}>
-            <AddIcon />
-          </Button>
+          <Menu>
+            <MenuButton as={Button} rightIcon={<AddIcon />}>
+              Collection
+            </MenuButton>
+            <MenuList>
+              <MenuItem
+                onClick={() => setShowCollectionModal(!showCollectionModal)}
+              >
+                Create a New Collection
+              </MenuItem>
+              <MenuDivider />
+              {collections.map((collection) => (
+                <MenuItem onClick={() => handleAdd(collection.name)}>
+                  Add to {collection.name}
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
+
+          <Modal
+            isOpen={showCollectionModal}
+            onClose={() => setShowCollectionModal(false)}
+          >
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Create a New Collection</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Stack spacing={4}>
+                  <Box>
+                    <Text mb="8px">Name</Text>
+                    <Textarea
+                      placeholder="Collection Name"
+                      w="200px"
+                      value={name}
+                      onChange={handleNameChange}
+                    />
+                  </Box>
+                  <Box>
+                    <Text mb="8px">Description</Text>
+                    <Textarea placeholder="Add a Description" w="400px" />
+                  </Box>
+                </Stack>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button variant="ghost">Cancel</Button>
+                <Button
+                  colorScheme="blue"
+                  onClick={() => handleCreateNewCollection()}
+                >
+                  Create
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
         </Stack>
 
         <Text fontSize="lg">

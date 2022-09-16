@@ -135,7 +135,15 @@ const Project = (props: any) => {
               Floor Price: {projectInfo.floor_price} SOL
             </Text>
             <Text fontSize="lg">
-              Change: {projectInfo.floor_price_1day_change}
+              Change:{" "}
+              <span
+                style={{
+                  color:
+                    projectInfo.floor_price_1day_change > 0 ? "green" : "red",
+                }}
+              >
+                {projectInfo.floor_price_1day_change}
+              </span>
             </Text>
             <Text fontSize="lg">
               Unique Owners: {projectInfo.num_of_token_holders}
