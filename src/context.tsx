@@ -9,5 +9,7 @@ const hyperClient = new HyperspaceClient(
 export const AppContext = createContext({
   hyperClient,
   likes: [],
-  collections: []
+  setLikes: (likes: any) => {},
+  collections: [],
+  setCollections: (collections: any) => {},
 });

@@ -1,4 +1,13 @@
-import { Grid, GridItem, Box, Image } from "@chakra-ui/react";
+import {
+  Grid,
+  GridItem,
+  Box,
+  Stack,
+  Image,
+  Heading,
+  Text,
+  Spacer,
+} from "@chakra-ui/react";
 import { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +28,6 @@ const Project = (props: any) => {
     id = window.location.href.split("/")[4];
 
     fetchProjectInfo();
-    fetchProjectTokens();
   }, []);
 
   const [projectInfo, setProjectInfo] = useState({});
@@ -47,16 +55,19 @@ const Project = (props: any) => {
       .then((res: any) => {
         console.log("PROJECT INFO: ", res);
         setProjectInfo(res.getProjectStatByName.project_stats[0]);
+        fetchProjectTokens(
+          res.getProjectStatByName.project_stats[0].project_id
+        );
       });
   };
 
-  const fetchProjectTokens = () => {
+  const fetchProjectTokens = (project_id) => {
     hyperClient
       .getMarketplaceSnapshot({
         condition: {
           projects: [
             {
-              project_id: id,
+              project_id,
             },
           ],
         },
@@ -99,30 +110,43 @@ const Project = (props: any) => {
 
   return (
     <Container>
-      <Box>
-        <Image
-          src={projectInfo.project.img_url}
-          alt={projectInfo.project.display_name}
-          style={{ width: "200px", height: "auto", borderRadius: "50%" }}
-        />
-        <h3>{projectInfo.project.display_name}</h3>
-      </Box>
-      <Box>
-        <p>
-          Listed: {projectInfo.num_of_token_listed.toLocaleString()} /{" "}
-          {(
-            projectInfo.num_of_token_listed /
-            projectInfo.percentage_of_token_listed
-          ).toLocaleString()}
-        </p>
-        <p>1 Day Volume: ${projectInfo.volume_1day.toLocaleString()}</p>
-        <p>Floor Price: {projectInfo.floor_price} SOL</p>
-        <p>Change: {projectInfo.floor_price_1day_change}</p>
-        <p>Unique Owners: {projectInfo.num_of_token_holders}</p>
-      </Box>
-      <Grid templateColumns={`repeat(${MAX_LIMIT}, 1fr)`} gap={6}>
-        {renderTokens()}
-      </Grid>
+      <Stack spacing={10}>
+        <Stack spacing={4} align="center">
+          <Image
+            src={projectInfo.project.img_url}
+            alt={projectInfo.project.display_name}
+            style={{ width: "200px", height: "auto", borderRadius: "50%" }}
+          />
+          <Heading as="h3" size="lg">
+            {projectInfo.project.display_name}
+          </Heading>
+          <Stack direction="row" spacing={8} align="center">
+            <Text fontSize="lg">
+              Listed: {projectInfo.num_of_token_listed.toLocaleString()} /{" "}
+              {(
+                projectInfo.num_of_token_listed /
+                projectInfo.percentage_of_token_listed
+              ).toLocaleString()}
+            </Text>
+            <Text fontSize="lg">
+              1 Day Volume: ${projectInfo.volume_1day.toLocaleString()}
+            </Text>
+            <Text fontSize="lg">
+              Floor Price: {projectInfo.floor_price} SOL
+            </Text>
+            <Text fontSize="lg">
+              Change: {projectInfo.floor_price_1day_change}
+            </Text>
+            <Text fontSize="lg">
+              Unique Owners: {projectInfo.num_of_token_holders}
+            </Text>
+          </Stack>
+        </Stack>
+
+        <Grid templateColumns={`repeat(${MAX_LIMIT}, 1fr)`} gap={6}>
+          {renderTokens()}
+        </Grid>
+      </Stack>
     </Container>
   );
 };

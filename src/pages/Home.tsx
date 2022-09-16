@@ -1,4 +1,4 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem, Stack } from "@chakra-ui/react";
 import { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

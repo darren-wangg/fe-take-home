@@ -45,6 +45,10 @@ const theme = extendTheme({
         color: "inherit",
         textDecoration: "none",
       },
+      li: {
+        display: "inline",
+        margin: "auto 1rem",
+      },
     },
   },
 });

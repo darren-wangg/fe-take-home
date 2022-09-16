@@ -1,8 +1,19 @@
-import { Box, Image, Badge, Icon, Grid, GridItem } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Badge,
+  Icon,
+  Grid,
+  GridItem,
+  Button,
+  Stack,
+  Heading,
+  Text,
+} from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
 import { FaDiscord, FaTwitter } from "react-icons/fa";
 
-const NAME_LIMIT: number = 20;
+const NAME_LIMIT: number = 25;
 
 const Card = (props: any) => {
   const { data, type } = props;
@@ -20,31 +31,38 @@ const Card = (props: any) => {
 
         <Box p="6">
           <Box display="flex" alignItems="baseline">
-            {data.project_id.substring(0, NAME_LIMIT)}
+            <Heading as="h5" size="md">
+              {data.project.display_name.substring(0, NAME_LIMIT)}
+            </Heading>
+          </Box>
+
+          <Stack direction="row" spacing={8} align="center">
             <Badge borderRadius="full" px="2" colorScheme="blue">
               <CheckIcon />
             </Badge>
-            <Box>
+            <Stack direction="row" spacing={2} align="center">
               <Icon as={FaDiscord} />
               <Icon as={FaTwitter} />
-            </Box>
-          </Box>
+            </Stack>
+          </Stack>
         </Box>
 
         <Box p="6">
-          <Box display="flex" alignItems="baseline">
+          <Stack direction="row" spacing={8} align="center">
             <Box>
-              <p>1D Volume</p>
-              <h3>{data.volume_1day.toLocaleString()}</h3>
+              <Text fontSize="md">1D Volume</Text>
+              <Heading as="h5" size="sm">
+                {data.volume_1day.toLocaleString()}
+              </Heading>
             </Box>
             <Box>
-              <p>Listed</p>
-              <h3>
+              <Text fontSize="md">Listed</Text>
+              <Heading as="h5" size="sm">
                 {data.num_of_token_listed.toLocaleString()} /{" "}
                 {data.num_of_token_holders.toLocaleString()}
-              </h3>
+              </Heading>
             </Box>
-          </Box>
+          </Stack>
         </Box>
       </Box>
     );
@@ -72,7 +90,7 @@ const Card = (props: any) => {
 
         <Box p="6">
           <Box display="flex" alignItems="baseline">
-            Sol:
+            Sol:{" "}
             {data.lowest_listing_mpa
               ? data.lowest_listing_mpa.price
               : data.price}
@@ -81,10 +99,12 @@ const Card = (props: any) => {
 
         <Box p="6">
           <Box display="flex" alignItems="baseline">
-            <Box>
-              <button>Buy</button>
-              <button>Details</button>
-            </Box>
+            <Stack direction="row" spacing={4} align="center">
+              <Button colorScheme="blue">Buy</Button>
+              <Button colorScheme="gray" variant="outline">
+                Details
+              </Button>
+            </Stack>
           </Box>
         </Box>
       </Box>
