@@ -14,7 +14,6 @@ import Discover from "./Discover";
 import Collection from "./Collection";
 
 import { AppContext } from "../context";
-import { render } from "react-dom";
 
 const Index = () => {
   const { colorMode } = useColorMode();
@@ -37,7 +36,7 @@ const Index = () => {
   }
 
   return (
-    <Container>
+    <Container suppressHydrationWarning={true}>
       <AppContext.Provider
         value={{
           hyperClient,

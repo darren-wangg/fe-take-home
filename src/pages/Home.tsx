@@ -1,4 +1,4 @@
-import { Grid, GridItem, Stack } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
 import { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +8,7 @@ import Card from "../components/Card";
 
 const MAX_LIMIT: number = 5;
 
-const Home = (props: any) => {
+const Home = () => {
   const { hyperClient } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -28,10 +28,6 @@ const Home = (props: any) => {
         },
       })
       .then((res: any) => {
-        console.log(
-          "PROJECTS: ",
-          res.getProjectStats.project_stats.slice(0, MAX_LIMIT)
-        );
         setProjects(res.getProjectStats.project_stats.slice(0, MAX_LIMIT));
       });
   }, []);
@@ -48,7 +44,9 @@ const Home = (props: any) => {
           colSpan={1}
           bg="gray"
           h="100px"
-          onClick={() => handleClick(project.project.me_slug || project.project_id)}
+          onClick={() =>
+            handleClick(project.project.me_slug || project.project_id)
+          }
         >
           <Card data={project} type="project" />
         </GridItem>

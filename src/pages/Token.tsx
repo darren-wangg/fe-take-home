@@ -33,7 +33,7 @@ import { useEffect, useContext, useState } from "react";
 import { AppContext } from "../context";
 import { Container } from "../components/Container";
 
-const Token = (props: any) => {
+const Token = () => {
   const { hyperClient, likes, setLikes, collections, setCollections } =
     useContext(AppContext);
 
@@ -61,7 +61,6 @@ const Token = (props: any) => {
         },
       })
       .then((res: any) => {
-        console.log("TOKEN: ", res);
         {
           /* just get the first token listing (if there are multiple) */
         }
@@ -187,8 +186,10 @@ const Token = (props: any) => {
 
         <Text fontSize="lg">
           Price:{" "}
-          {tokenInfo.market_place_state && tokenInfo.market_place_state.price}{" "}
-          SOL
+          <b>
+            {tokenInfo.market_place_state && tokenInfo.market_place_state.price}{" "}
+            SOL
+          </b>
         </Text>
 
         <Stack direction="row" spacing={4} align="center">
@@ -224,7 +225,7 @@ const Token = (props: any) => {
                       name="Default User"
                       src="https://bit.ly/dan-abramov"
                     />
-                    <Text fontSize="md">User: </Text>
+                    <Text fontSize="md">Username: </Text>
                     <Text fontSize="md">{comment}</Text>
                   </Stack>
                 ))}

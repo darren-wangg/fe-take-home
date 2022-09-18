@@ -1,4 +1,4 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem, Heading } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../context";
@@ -8,7 +8,7 @@ import { Container } from "../components/Container";
 
 const MAX_LIMIT: number = 5;
 
-const Likes = (props: any) => {
+const Likes = () => {
   const { likes } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -32,8 +32,14 @@ const Likes = (props: any) => {
     });
   };
 
-  if (!likes) {
-    return <div>No Likes... Heart a token to save it to your likes!</div>;
+  if (!likes || likes.length == 0) {
+    return (
+      <div className="center">
+        <Heading as="h2" fontSize="xl">
+          No Likes... Heart a token to save it to your likes!
+        </Heading>
+      </div>
+    );
   }
 
   return (

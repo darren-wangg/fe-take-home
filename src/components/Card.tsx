@@ -9,6 +9,7 @@ import {
   Stack,
   Heading,
   Text,
+  Spacer,
 } from "@chakra-ui/react";
 import { CheckIcon } from "@chakra-ui/icons";
 import { FaDiscord, FaTwitter } from "react-icons/fa";
@@ -30,17 +31,16 @@ const Card = (props: any) => {
       >
         <Image src={data.project.img_url} alt={data.project_id} />
 
-        <Box p="6">
-          <Box display="flex" alignItems="baseline">
-            <Heading as="h5" size="md">
-              {data.project.display_name.substring(0, NAME_LIMIT)}
-            </Heading>
-          </Box>
-
-          <Stack direction="row" spacing={8} align="center">
-            <Badge borderRadius="full" px="2" colorScheme="blue">
-              <CheckIcon />
-            </Badge>
+        <Box p="4">
+          <Stack spacing={4}>
+            <Stack direction="row" spacing={2} align="center">
+              <Heading as="h5" size="md">
+                {data.project.display_name.substring(0, NAME_LIMIT)}
+              </Heading>
+              <Badge borderRadius="full" px="2" colorScheme="blue">
+                <CheckIcon />
+              </Badge>
+            </Stack>
             <Stack direction="row" spacing={2} align="center">
               <Icon as={FaDiscord} />
               <Icon as={FaTwitter} />
@@ -48,8 +48,8 @@ const Card = (props: any) => {
           </Stack>
         </Box>
 
-        <Box p="6">
-          <Stack direction="row" spacing={8} align="center">
+        <Box p="4">
+          <Stack direction="row" spacing={4} align="center">
             <Box>
               <Text fontSize="md">1D Volume</Text>
               <Heading as="h5" size="sm">
@@ -94,9 +94,11 @@ const Card = (props: any) => {
         <Box p="6">
           <Text fontSize="lg">
             Sol:{" "}
-            {data.lowest_listing_mpa
-              ? data.lowest_listing_mpa.price
-              : data.market_place_state.price}
+            <b>
+              {data.lowest_listing_mpa
+                ? data.lowest_listing_mpa.price
+                : data.market_place_state.price}
+            </b>
           </Text>
         </Box>
 
@@ -122,13 +124,14 @@ const Card = (props: any) => {
         borderRadius="lg"
         style={{ cursor: "pointer" }}
       >
-        <Box h="70px" bg="gray">
+        <Spacer />
+        <Box h="70px" bg="lightGray" className="center">
           <Heading as="h3" size="lg">
             {data.name}
           </Heading>
         </Box>
 
-        <Grid templateColumns={`repeat(${MAX_LIMIT}, 1fr)`} gap={2}>
+        <Grid templateColumns={`repeat(${MAX_LIMIT}, 1fr)`}>
           {data.tokens.map((token: any, index: number) => {
             return (
               <GridItem key={index} colSpan={1} bg="gray" h="100px" w="100px">

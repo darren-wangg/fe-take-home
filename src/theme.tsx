@@ -28,7 +28,7 @@ const theme = extendTheme({
   styles: {
     global: {
       html: {
-        height: "100%",
+        minHeight: "100vh",
         background: "siteBackground",
       },
       "#__next": {
@@ -37,8 +37,8 @@ const theme = extendTheme({
       body: {
         padding: 0,
         margin: 0,
-        height: "100%",
         width: "100%",
+        minHeight: "100vh",
         background: "siteBackground !important",
       },
       a: {
@@ -48,6 +48,12 @@ const theme = extendTheme({
       li: {
         display: "inline",
         margin: "auto 1rem",
+      },
+      ".center": {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
       },
     },
   },

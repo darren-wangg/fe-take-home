@@ -1,20 +1,10 @@
-import {
-  Grid,
-  GridItem,
-  Box,
-  Stack,
-  Image,
-  Heading,
-  Text,
-  Spacer,
-} from "@chakra-ui/react";
+import { Grid, GridItem, Stack, Image, Heading, Text } from "@chakra-ui/react";
 import { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AppContext } from "../context";
 import Card from "../components/Card";
 import { Container } from "../components/Container";
-import { StringInputOperationEnum } from "hyperspace-client-js";
 
 const MAX_LIMIT: number = 5;
 
@@ -53,7 +43,6 @@ const Project = (props: any) => {
         },
       })
       .then((res: any) => {
-        console.log("PROJECT INFO: ", res);
         setProjectInfo(res.getProjectStatByName.project_stats[0]);
         fetchProjectTokens(
           res.getProjectStatByName.project_stats[0].project_id
@@ -77,7 +66,6 @@ const Project = (props: any) => {
         },
       })
       .then((res: any) => {
-        console.log("PROJECT TOKENS: ", res);
         setTokens(
           res.getMarketPlaceSnapshots.market_place_snapshots.slice(0, MAX_LIMIT)
         );
@@ -122,17 +110,20 @@ const Project = (props: any) => {
           </Heading>
           <Stack direction="row" spacing={8} align="center">
             <Text fontSize="lg">
-              Listed: {projectInfo.num_of_token_listed.toLocaleString()} /{" "}
-              {(
-                projectInfo.num_of_token_listed /
-                projectInfo.percentage_of_token_listed
-              ).toLocaleString()}
+              Listed:{" "}
+              <b>
+                {projectInfo.num_of_token_listed.toLocaleString()} /{" "}
+                {(
+                  projectInfo.num_of_token_listed /
+                  projectInfo.percentage_of_token_listed
+                ).toLocaleString()}
+              </b>
             </Text>
             <Text fontSize="lg">
-              1 Day Volume: ${projectInfo.volume_1day.toLocaleString()}
+              1 Day Volume: <b>${projectInfo.volume_1day.toLocaleString()}</b>
             </Text>
             <Text fontSize="lg">
-              Floor Price: {projectInfo.floor_price} SOL
+              Floor Price: <b>{projectInfo.floor_price} SOL</b>
             </Text>
             <Text fontSize="lg">
               Change:{" "}
@@ -140,13 +131,14 @@ const Project = (props: any) => {
                 style={{
                   color:
                     projectInfo.floor_price_1day_change > 0 ? "green" : "red",
+                  fontWeight: "bold",
                 }}
               >
                 {projectInfo.floor_price_1day_change}
               </span>
             </Text>
             <Text fontSize="lg">
-              Unique Owners: {projectInfo.num_of_token_holders}
+              Unique Owners: <b>{projectInfo.num_of_token_holders}</b>
             </Text>
           </Stack>
         </Stack>

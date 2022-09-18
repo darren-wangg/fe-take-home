@@ -1,4 +1,4 @@
-import { Grid, GridItem, Stack, Box, Image } from "@chakra-ui/react";
+import { Grid, GridItem, Heading } from "@chakra-ui/react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,7 +6,9 @@ import { AppContext } from "../context";
 import Card from "../components/Card";
 import { Container } from "../components/Container";
 
-const Discover = (props: any) => {
+const MAX_LIMIT: number = 5;
+
+const Discover = () => {
   const { collections } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -29,17 +31,21 @@ const Discover = (props: any) => {
     });
   };
 
-  if (!collections) {
+  if (!collections || collections.length == 0) {
     return (
-      <div>
-        No Collections... Create a new collection and start adding tokens!
+      <div className="center">
+        <Heading as="h2" fontSize="xl">
+          No Collections... Create a new collection and start adding tokens!
+        </Heading>
       </div>
     );
   }
 
   return (
     <Container>
-      <Grid gap={6}>{renderCollections()}</Grid>
+      <Grid templateColumns={`repeat(${MAX_LIMIT}, 1fr)`} gap={4}>
+        {renderCollections()}
+      </Grid>
     </Container>
   );
 };

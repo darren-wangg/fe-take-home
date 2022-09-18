@@ -16,7 +16,7 @@ import { Container } from "../components/Container";
 
 const MAX_LIMIT: number = 5;
 
-const Collection = (props: any) => {
+const Collection = () => {
   const { collections } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -24,12 +24,12 @@ const Collection = (props: any) => {
   const [isEditMode, setIsEditMode] = useState(false);
 
   useEffect(() => {
-    const name = window.location.href.split("/")[4];
+    const name = window.location.href.split("/")[4].replaceAll("%20", " ");
 
-    const collection = collections.find(
+    const match = collections.find(
       (collection: any) => collection.name === name
     );
-    setCollection(collection);
+    setCollection(match);
   }, []);
 
   const handleClick = (address: string) => {
@@ -53,7 +53,13 @@ const Collection = (props: any) => {
   };
 
   if (!collection || !collection.tokens) {
-    return <div>Nothing in this collection yet... Add a token!</div>;
+    return (
+      <div className="center">
+        <Heading as="h2" fontSize="xl">
+          Nothing in this collection yet... Add a token!
+        </Heading>
+      </div>
+    );
   }
 
   return (
