@@ -12,6 +12,5 @@ export const Container = (props: FlexProps) => (
     }}
     transition="all 0.15s ease-out"
     {...props}
-    style={{ width: "90vw", margin: "auto" }}
   />
 );
